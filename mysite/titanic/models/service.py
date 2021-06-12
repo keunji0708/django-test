@@ -1,6 +1,9 @@
 from mysite.titanic.models.dataset import Dataset
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import RandomForestClassifier
 
 
 class Service(object):
@@ -83,6 +86,18 @@ class Service(object):
         this.train['FareBand'] = pd.qcut(this.train['Fare'], 4, labels={1, 2, 3, 4})
         this.test['FareBand'] = pd.qcut(this.test['Fare'], 4, labels={1, 2, 3, 4})     # 최고와 최저를 통해 4등분함.
 
+    @staticmethod
+    def create_k_fold() -> object:
+        return KFold(n_splits=10, shuffle=True, random_state=0)     # 트레인데이터를 10등분, 반복출제 허용
 
+    def get_accuracy(self, this):
+        score = cross_val_score(RandomForestClassifier(),
+                                this.train,
+                                this.label,
+                                cv=self.create_k_fold(),
+                                n_jobs=1,
+                                scoring='accuracy'
+                                )
+        return round(np.mean(score)*100, 2)
 
-
+    
