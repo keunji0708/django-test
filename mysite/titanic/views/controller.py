@@ -68,8 +68,7 @@ if __name__ == '__main__':
             plot = Plot('train.csv')
             plot.print_survived_dead()
             '''
-            The data type of Train is <class 'pandas.core.frame.DataFrame'>.
-            Columns of Train is Index(['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
-            'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'],
-            dtype='object').
+            Train의 데이터 타입은 is <class 'pandas.core.frame.DataFrame'>.
+            Train의 컬럼은 'PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
+                            'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked'이다.
             '''
