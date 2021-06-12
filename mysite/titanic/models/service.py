@@ -12,7 +12,7 @@ class Service(object):
 
     def new_model(self, payload) -> object:
         this = self.dataset
-        this.context = '../data/'
+        this.context = './data/'
         this.fname = payload    # 외부에서 입력된 값(파일명, 검색어...)
         return pd.read_csv(this.context + this.fname)
 
@@ -34,8 +34,8 @@ class Service(object):
 
     @staticmethod
     def embarked_nominal(this) -> object:
-        this.train = this.train.fillna({'Embarked', 'S'})    # S는 사우스햄튼
-        this.test = this.test.fillna({'Embarked', 'S'})  # S는 사우스햄튼
+        this.train = this.train.fillna({'Embarked': 'S'})    # S는 사우스햄튼
+        this.test = this.test.fillna({'Embarked': 'S'})  # S는 사우스햄튼
         this.train['Embarked'] = this.train['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
         this.test['Embarked'] = this.test['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
         return this
@@ -85,6 +85,7 @@ class Service(object):
     def fare_ordinal(this) -> object:
         this.train['FareBand'] = pd.qcut(this.train['Fare'], 4, labels={1, 2, 3, 4})
         this.test['FareBand'] = pd.qcut(this.test['Fare'], 4, labels={1, 2, 3, 4})     # 최고와 최저를 통해 4등분함.
+        return this
 
     @staticmethod
     def create_k_fold() -> object:
@@ -100,4 +101,3 @@ class Service(object):
                                 )
         return round(np.mean(score)*100, 2)
 
-    
